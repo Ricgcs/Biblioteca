@@ -1,0 +1,5 @@
+    <a href="/Front/Inicial/html/inicial.html"><button>Inicial</button></a>
+    <a href="/Front/Inicial/html/cadastro_escola.html"><button>Cadastro escola</button></a>
+    <a href="/Front/Inicial/html/login_escola.html"><button>Login escola</button></a>
+    <a href="/Front/Inicial/html/login_professor.html"><button>Login professor</button></a>
+    <a href="/Front/Inicial/html/login_aluno.html"><button>Login aluno</button></a>

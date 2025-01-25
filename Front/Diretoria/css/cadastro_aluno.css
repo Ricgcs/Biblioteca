@@ -1,0 +1,356 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+#tela {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(232, 232, 232, 0.841);
+}
+
+#topo {
+  width: 100%;
+  height: 10%;
+  padding: 1vw;
+  background-color: rgb(37, 37, 253);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#esquerda {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 11%;
+  height: 100%;
+}
+
+#te1 {
+  color: white;
+}
+
+#texto_esquerda {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: auto;
+}
+
+#barra_horizontal {
+  width: 100%;
+  background-color: white;
+  height: 0.3vw;
+  border-radius: 1vw;
+}
+
+#button_menu {
+  width: 13%;
+  height: 27%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#button_menu:hover {
+  cursor: pointer;
+}
+
+#barra {
+  width: 100%;
+  height: 0.2vw;
+  border-radius: 1vw;
+  background-color: rgb(255, 255, 255);
+}
+
+.menu {
+  display: none;
+  /* position: absolute;
+    top: 10%;
+    left: 0; */
+  width: 100%;
+  background-color: rgb(6, 9, 90);
+  padding: 1vw;
+  box-sizing: border-box;
+}
+
+.menu.ativo {
+  position: absolute;
+  display: flex; /* Mostra o menu quando a classe 'ativo' é adicionada */
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.menu button {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 0.5vw 1vw;
+  border-radius: 0.5vw;
+  cursor: pointer;
+}
+
+.menu button:hover {
+  background-color: rgb(200, 200, 200);
+}
+
+#corpo {
+  /* background-color: brown;  */
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+#centro_esquerda {
+  width: 20%;
+  background-color: aqua;
+  font-size: 140%;
+}
+
+#btn_cadastro_aluno {
+  margin-top: 10%;
+  height: 5%;
+  width: auto;
+}
+
+#btn_cadastro_aluno:hover{
+  background-color: rgba(128, 128, 128, 0.577);
+}
+
+#btn_ver_aluno {
+  height: 5%;
+}
+
+#btn_ver_aluno:hover{
+  background-color: rgba(128, 128, 128, 0.577);
+}
+
+#btn_geral_aluno {
+  height: 5%;
+}
+
+#btn_geral_aluno:hover{
+  background-color: rgba(128, 128, 128, 0.577);
+}
+
+#centro_centro {
+  width: 80%;
+  height: 100%;
+  background-color: blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+}
+
+#barra_vertical {
+  background-color: rgb(43, 42, 42);
+  float: right;
+  width: 2%;
+  height: 100%;
+}
+#form_cadastro_escola {
+  margin-top: -10vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 15%;
+  height: 40%;
+  align-items: center;
+}
+
+#escola_nome {
+  background-color: gainsboro;
+  padding: 0.5vw;
+  border: solid black 0.15vw;
+  border-radius: 10vw;
+  width: 100%;
+}
+
+#escola_email {
+  background-color: gainsboro;
+  padding: 0.5vw;
+  border: solid black 0.15vw;
+  border-radius: 10vw;
+  width: 100%;
+}
+
+#escola_senha {
+  background-color: gainsboro;
+  padding: 0.5vw;
+  border: solid black 0.15vw;
+  border-radius: 10vw;
+  width: 100%;
+}
+
+#escola_foto {
+  background-color: gainsboro;
+  padding: 0.5vw;
+  border: solid black 0.15vw;
+  border-radius: 10vw;
+  width: 100%;
+}
+
+#cadastro {
+  background-color: gainsboro;
+  padding: 0.5vw;
+  border: solid black 0.15vw;
+  border-radius: 10vw;
+  width: 50%;
+}
+
+#cadastro:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+
+
+#div_cadastro{
+  display: flex;
+  width: 70%;
+  height: 70%;
+  border-radius: 1vw;
+  background-color: white;
+  margin-top: -10%;
+}
+
+#div_inputs{
+  background-color: brown;
+  border-top-left-radius: 1vw;
+  border-bottom-left-radius: 1vw;
+  width: 60%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+input{
+  margin-bottom: 2%;
+}
+
+select{
+  margin-bottom: 2%;
+
+}
+
+#input_nome{
+  padding: 1%;
+  border-radius: 1vw;
+  background-color: rgba(108, 108, 108, 0.788);
+  border: solid 0.1vw black;
+  color: white;
+  font-size: 1vw;
+}
+
+#input_img{
+  padding: 1%;
+  border-radius: 1vw;
+  background-color: rgba(108, 108, 108, 0.788);
+  border: solid 0.1vw black;
+  /* color: white; */
+  font-size: 1vw;
+}
+
+#input_nome::placeholder{
+  color: black;
+}
+
+#select_nome_escola{
+  padding: 1%;
+  border-radius: 1vw;
+  background-color: rgba(108, 108, 108, 0.788);
+  border: solid 0.1vw black;
+  color: white;
+  font-size: 1vw;
+  width: 40%;
+}
+
+#input_email{
+  padding: 1%;
+  border-radius: 1vw;
+  background-color: rgba(108, 108, 108, 0.788);
+  border: solid 0.1vw black;
+  color: white;
+  font-size: 1vw;
+}
+
+#input_email::placeholder{
+  color: black;
+}
+
+#input_senha{
+  padding: 1%;
+  border-radius: 1vw;
+  background-color: rgba(108, 108, 108, 0.788);
+  border: solid 0.1vw black;
+  color: white;
+  font-size: 1vw;
+}
+
+#input_senha::placeholder{
+  color: black;
+}
+
+
+#btnc{
+  margin-left: 5%;
+  padding: 1%;
+  font-size: 80%;
+  border-radius: 1vw;
+  background-color: rgba(108, 108, 108, 0.788);
+  border: solid 0.1vw black;
+}
+
+#btnc:hover{
+  cursor: pointer;
+}
+
+#div_img{
+  width: 40%;
+  height: 100%;
+  border-top-right-radius: 1vw;
+  border-bottom-right-radius: 1vw;
+  background-color: blueviolet;
+  display: flex;
+}
+
+#text_quant{
+  margin-top: 10%;
+  font-size: 100%;
+}
+
+#img{
+  width: 80%;
+  height: 60%;
+}
+
+#alunos{
+  width: 15%;
+  height: 30%;
+  background-color: black;
+  color: white;
+  margin-left: 1vw;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+justify-content: space-around; 
+font-size: 130%;
+}
+
+#main{
+  overflow: auto;
+  display: flex;  
+  flex-wrap: wrap;
+  gap: 4%;
+  width: 100%;
+  height: 100%;
+}

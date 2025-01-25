@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/cadastro_professor.css" />
+    <title>professor</title>
+  </head>
+  <body>
+    <div id="tela">
+      <div id="topo">
+        <div id="esquerda">
+          <div id="button_menu">
+            <hr id="barra" />
+            <hr id="barra" />
+            <hr id="barra" />
+          </div>
+
+          <div id="texto_esquerda">
+            <h1 id="te1">Biblioteca</h1>
+            <hr id="barra_horizontal" />
+          </div>
+        </div>
+
+        <div id="centro"></div>
+        <div id="direita"></div>
+      </div>
+      <div id="menu" class="menu">
+        <a href="./inicial_diretoria.html"><button>Inicial</button></a>
+        <a href="./cadastro_sala.html"><button>Cadastro sala</button></a>
+        <a href="./cadastro_professor.html"
+          ><button>Cadastro professor</button></a
+        >
+        <a href="./cadastro_acervo.html"><button>Cadastro acervo</button></a>
+        <a href="#"><button>Status</button></a>
+      </div>
+
+      <div id="corpo">
+        <div id="centro_esquerda">
+          <hr id="barra_vertical" />
+
+          <div id="btn_cadastro_professor">Cadastrar professor</div>
+
+          <div id="btn_ver_professor">Vizualizar professor</div>
+
+          <div id="btn_geral_professor">Geral escola</div>
+        </div>
+
+        <div id="centro_centro"></div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const cadastro_professor = document.getElementById(
+          "btn_cadastro_professor"
+        );
+        const ver_professor = document.getElementById("btn_ver_professor");
+        const geral_professor = document.getElementById("btn_geral_professor");
+        const btn_menu = document.getElementById("button_menu");
+        const menu = document.getElementById("menu");
+        const btn_cadastro = document.getElementById("cadastro");
+
+        btn_menu.addEventListener("click", () => {
+          if (!menu.classList.contains("ativo")) {
+            menu.classList.add("ativo"); // Adiciona a classe para exibir o menu
+          } else {
+            menu.classList.remove("ativo"); // Remove a classe para ocultar o menu
+          }
+        });
+
+        const div_principal = document.getElementById("centro_centro");
+
+        cadastro_professor.addEventListener("click", async () => {
+          div_principal.textContent = "";
+          const nome = localStorage.getItem("nome");
+
+          const div_cadastro = document.createElement("form");
+          div_cadastro.id = "div_cadastro";
+          div_principal.appendChild(div_cadastro);
+
+          const div_inputs = document.createElement("div");
+          div_inputs.id = "div_inputs";
+
+          const input_nome = document.createElement("input");
+          input_nome.id = "input_nome";
+          input_nome.placeholder = "Nome professor";
+
+          const select_nome_escola = document.createElement("select");
+          select_nome_escola.id = "select_nome_escola";
+
+          try {
+            const professor_um = await fetch(
+              `http://localhost:3000/sala/mostrar/${nome}`
+            );
+            const professor_dois = await professor_um.json();
+
+            professor_dois.forEach((cod) => {
+              const professors = document.createElement("option");
+              professors.id = "professors";
+
+              select_nome_escola.appendChild(professors);
+              professors.textContent = `${cod.Nome}`;
+            });
+          } catch (error) {
+            console.log(error);
+          }
+
+          const input_email = document.createElement("input");
+          input_email.id = "input_email";
+          input_email.type = "email";
+          input_email.placeholder = "Email professor";
+
+          const input_senha = document.createElement("input");
+          input_senha.id = "input_senha";
+          input_senha.type = "password";
+          input_senha.placeholder = "Senha professor";
+
+          const input_img = document.createElement("input");
+          input_img.id = "input_img";
+          input_img.type = "file";
+
+          const btnc = document.createElement("button");
+          btnc.id = "btnc";
+          btnc.textContent = "Cadastrar professor";
+
+          const quant_um = await fetch(
+            `http://localhost:3000/professor/quantidade/${nome}`
+          );
+          const quant_dois = await quant_um.json();
+          const quant_tres = quant_dois.quantidade;
+          const quant_tres_mais = quant_tres[0];
+          const quant_quatro = quant_tres_mais[0].quantidade;
+
+          const div_img = document.createElement("div");
+          div_img.id = "div_img";
+          const text_quant = document.createElement("h1");
+          text_quant.textContent = `Quantidade professors: ${quant_quatro}`;
+          text_quant.id = "text_quant";
+
+          div_cadastro.appendChild(div_inputs);
+          div_inputs.appendChild(input_nome);
+          div_inputs.appendChild(select_nome_escola);
+
+          div_inputs.appendChild(input_email);
+          div_inputs.appendChild(input_senha);
+          div_inputs.appendChild(input_img);
+          div_inputs.appendChild(btnc);
+
+          div_cadastro.appendChild(div_img);
+          div_img.appendChild(text_quant);
+
+          btnc.addEventListener("click", async () => {
+            event.preventDefault();
+            const escola = localStorage.getItem("nome");
+            const nome = document.getElementById("input_nome").value;
+            const sala = document.getElementById("select_nome_escola").value;
+            const email = document.getElementById("input_email").value;
+            const senha = document.getElementById("input_senha").value;
+            const imagem = document.getElementById("input_img");
+            if ((!nome, !sala, !email, !senha)) {
+              alert("Preencha o nome do professor");
+              return;
+            }
+
+            if (!sala) {
+              alert("Preencha o nome da sala");
+            }
+
+            if (!email) {
+              alert("Preencha o email");
+              return;
+            }
+
+            if (!senha) {
+              alert("Preencha a senha");
+              return;
+            }
+            const formData = new FormData();
+
+            formData.append("escola", escola);
+            formData.append("nome", nome);
+            formData.append("sala", sala);
+            formData.append("email", email);
+            formData.append("senha", senha);
+
+            formData.append("img", imagem.files[0]);
+
+            try {
+              alert("entrou");
+
+              const teste_um = await fetch(
+                `http://localhost:3000/professor/cadastro`,
+                {
+                  method: "POST",
+                  body: formData,
+                }
+              );
+
+              const teste_dois = await teste_um.json();
+              const teste_tres = teste_dois.pod;
+              if (teste_tres == 1) {
+                alert(`professor "${nome}" cadastrado com sucesso`);
+                //window.location.reload();
+              } else {
+                alert(`professor "${nome}" já existe`);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          });
+        });
+
+        ver_professor.addEventListener("click", async () => {
+          div_principal.textContent = "";
+          const escola = localStorage.getItem("nome");
+          const main = document.createElement("div");
+          main.id = "main";
+          div_principal.appendChild(main);
+          try {
+            const professor_um = await fetch(
+              `http://localhost:3000/professor/mostrar/${escola}`,
+              {}
+            );
+            const professor_dois = await professor_um.json();
+            console.log(professor_dois);
+            professor_dois.forEach((cod) => {
+              alert(cod.Nome);
+              const professors = document.createElement("div");
+              professors.id = "professors";
+              const professor_img = document.createElement("img");
+              if (cod.imagem && cod.imagem.data) {
+                const arrayBuffer = new Uint8Array(cod.imagem.data);
+                const binary = Array.from(arrayBuffer)
+                  .map((byte) => String.fromCharCode(byte))
+                  .join("");
+                const base64String = btoa(binary); // Converte para Base64
+                const mimeType = cod.imagem.contentType;
+                professor_img.src = `data:${mimeType};base64,${base64String}`;
+              } else {
+                professor_img.src = "../imagem/user_image_default.png";
+                professor_img.style.background = "white";
+              }
+
+              professor_img.id = "img";
+              main.appendChild(professors);
+              professors.textContent = `${cod.Nome}`;
+              professors.appendChild(professor_img);
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        });
+
+        geral_professor.addEventListener("click", () => {
+          div_principal.textContent = "";
+        });
+      }); //fim domcontentloaded
+    </script>
+  </body>
+</html>
