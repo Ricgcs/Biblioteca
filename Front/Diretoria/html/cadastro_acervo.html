@@ -1,60 +1,429 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/cadastro_acervo.css">
-    <title>Cadastro acervo</title>
-</head>
-<body>
-<div id="tela">
-    <div id="topo">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/cadastro_acervo.css" />
+    <title>acervo</title>
+  </head>
+  <body>
+    <div id="tela">
+      <div id="topo">
+        <div id="esquerda">
+          <div id="button_menu">
+            <hr id="barra" />
+            <hr id="barra" />
+            <hr id="barra" />
+          </div>
 
-            <div id="esquerda">
-                <div id="button_menu">
-                    <hr id="barra">
-                    <hr id="barra">
-                    <hr id="barra">
-                </div>
+          <div id="texto_esquerda">
+            <h1 id="te1">Biblioteca</h1>
+            <hr id="barra_horizontal" />
+          </div>
+        </div>
 
-                <div id="texto_esquerda">
-                    <h1 id="te1">Biblioteca</h1>
-                    <hr id="barra_horizontal">
-                </div>
-            </div>
-            
-            <div id="centro"></div>
-            <div id="direita"></div>  
-
-    </div>
-    <div id="menu" class="menu">
-        <a href="./cadastro_professor.html"><button>Cadastro professor</button></a>
-        <a href="./cadastro_aluno.html"><button>Cadastro aluno</button></a>
-        <a href="./cadastro_acervo.html"><button>Cadastro acervo</button></a>
+        <div id="centro"></div>
+        <div id="direita"></div>
+      </div>
+      <div id="menu" class="menu">
+        <a href="./inicial_diretoria.html"><button>Inicial</button></a>
         <a href="./cadastro_sala.html"><button>Cadastro sala</button></a>
+        <a href="./cadastro_acervo.html"><button>Cadastro acervo</button></a>
+        <a href="./cadastro_professor.html"
+          ><button>Cadastro professor</button></a
+        >
         <a href="#"><button>Status</button></a>
-    </div>
+      </div>
 
-    <div id="corpo">    
-  
+      <div id="corpo">
+        <div id="centro_esquerda">
+          <hr id="barra_vertical" />
+
+          <div id="btn_cadastro_acervo">Cadastrar acervo</div>
+
+          <div id="btn_cadastro_genero">Cadastrar gênero</div>
+
+          <div id="btn_ver_acervo">Vizualizar acervo</div>
+
+          <div id="btn_geral_acervo">Geral escola</div>
+        </div>
+
+        <div id="centro_centro"></div>
+      </div>
     </div>
-</div>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const cadastro_acervo = document.getElementById("btn_cadastro_acervo");
+        const ver_acervo = document.getElementById("btn_ver_acervo");
+        const geral_acervo = document.getElementById("btn_geral_acervo");
+        const cadastro_genero = document.getElementById("btn_cadastro_genero");
         const btn_menu = document.getElementById("button_menu");
         const menu = document.getElementById("menu");
         const btn_cadastro = document.getElementById("cadastro");
 
         btn_menu.addEventListener("click", () => {
-            if (!menu.classList.contains("ativo")) {
-                menu.classList.add("ativo"); // Adiciona a classe para exibir o menu
-            } else {
-                menu.classList.remove("ativo"); // Remove a classe para ocultar o menu
-            }
-        });//fim menu
-        
+          if (!menu.classList.contains("ativo")) {
+            menu.classList.add("ativo");
+          } else {
+            menu.classList.remove("ativo");
+          }
+        });
 
-    });//fim domcontentloaded
-</script>
-</body>
+        const div_principal = document.getElementById("centro_centro");
+
+        cadastro_acervo.addEventListener("click", async () => {
+          div_principal.textContent = "";
+          const nome = localStorage.getItem("nome");
+
+          const div_cadastro = document.createElement("form");
+          div_cadastro.id = "div_cadastro";
+          div_principal.appendChild(div_cadastro);
+
+          const div_inputs = document.createElement("div");
+          div_inputs.id = "div_inputs";
+
+          const input_obra = document.createElement("input");
+          input_obra.id = "input_obra";
+          input_obra.placeholder = "Nome obra";
+
+          const input_autor = document.createElement("input");
+          input_autor.placeholder = "Nome autor";
+          input_autor.id = "input_autor";
+
+          const input_qtdPaginas = document.createElement("input");
+          input_qtdPaginas.id = "input_qtdPaginas";
+          input_qtdPaginas.type = "number";
+          input_qtdPaginas.placeholder = "quantidade de páginas";
+
+          const input_quantidade = document.createElement("input");
+          input_quantidade.id = "input_quantidade";
+          input_quantidade.type = "number";
+          input_quantidade.placeholder = "Quantidade de unidades";
+
+          const selectGenero = document.createElement("select");
+          selectGenero.id = "selectGenero";
+
+          const optionGenero = document.createElement("option");
+          optionGenero.id = "optionGenero";
+          optionGenero.textContent = "Selecione o gênero";
+          optionGenero.selected = "disabled";
+          selectGenero.appendChild(optionGenero);
+          //<option value="" selected disabled>Selecione...</option>
+
+          try {
+            const acervo_um = await fetch(
+              `http://localhost:3000/genero/mostrar/${nome}`
+            );
+
+            const acervo_dois = await acervo_um.json();
+
+            acervo_dois.forEach((cod) => {
+              const gen = document.createElement("option");
+              gen.id = "acervos";
+              selectGenero.appendChild(gen);
+              gen.textContent = `${cod.Nome}`;
+            });
+          } catch (error) {
+            console.log(error);
+          }
+
+          const input_img = document.createElement("input");
+          input_img.id = "input_img";
+          input_img.type = "file";
+
+          const sinopse = document.createElement("textarea");
+          sinopse.id = "sinopse";
+          sinopse.placeholder = "Digite a sinopse";
+
+          const btnc = document.createElement("button");
+          btnc.id = "btnc";
+          btnc.textContent = "Cadastrar acervo";
+
+          const quant_um = await fetch(
+            `http://localhost:3000/acervo/quantidade/${nome}`
+          );
+          const quant_dois = await quant_um.json();
+          const quant_tres = quant_dois.quantidade;
+          const quant_tres_mais = quant_tres[0];
+          const quant_quatro = quant_tres_mais[0].quantidade;
+
+          const div_img = document.createElement("div");
+          div_img.id = "div_img";
+          const text_quant = document.createElement("h1");
+          text_quant.textContent = `Quantidade acervos: ${quant_quatro}`;
+          text_quant.id = "text_quant";
+
+          div_cadastro.appendChild(div_inputs);
+          div_inputs.appendChild(input_obra);
+          div_inputs.appendChild(input_autor);
+          div_inputs.appendChild(input_qtdPaginas);
+          div_inputs.appendChild(input_quantidade);
+          div_inputs.appendChild(selectGenero);
+          div_inputs.appendChild(sinopse);
+          div_inputs.appendChild(input_img);
+          div_inputs.appendChild(btnc);
+
+          div_cadastro.appendChild(div_img);
+          div_img.appendChild(text_quant);
+
+          btnc.addEventListener("click", async () => {
+            event.preventDefault();
+            const escola = localStorage.getItem("nome");
+            const nome = document.getElementById("input_obra").value;
+            const autor = document.getElementById("input_autor").value;
+            const qtd_paginas =
+              document.getElementById("input_qtdPaginas").value;
+            const quantidade =
+              document.getElementById("input_quantidade").value;
+            const sinopse = document.getElementById("sinopse").value;
+            const genero = document.getElementById("selectGenero").value;
+            const imagem = document.getElementById("input_img");
+            if (!nome) {
+              alert("Preencha o nome do acervo");
+              return;
+            }
+
+            if (!autor) {
+              alert("Preencha o nome do(a) autor(a)");
+            }
+
+            if (!qtd_paginas) {
+              alert("Preencha a quantidade de páginas");
+              return;
+            }
+
+            if (!quantidade) {
+              alert("Preencha a quantidade de unidade");
+              return;
+            }
+
+            if (!genero) {
+              alert("Selecione o gênero da obra");
+              return;
+            }
+
+            if (!sinopse) {
+              alert("Preencha a sinopse");
+              return;
+            }
+            const formData = new FormData();
+
+            formData.append("escola", escola);
+            formData.append("obra", nome);
+            formData.append("autor", autor);
+            formData.append("paginas", qtd_paginas);
+            formData.append("quantidade", quantidade);
+            formData.append("sinopse", sinopse);
+            formData.append("genero", genero);
+            formData.append("img", imagem.files[0]);
+
+            try {
+              alert("entrou");
+
+              const teste_um = await fetch(
+                `http://localhost:3000/acervo/cadastro`,
+                {
+                  method: "POST",
+                  body: formData,
+                }
+              );
+              const teste_dois = await teste_um.json();
+              const teste_tres = teste_dois.pod;
+              alert(teste_tres);
+              if (teste_tres == 1) {
+                alert(`acervo "${nome}" cadastrado com sucesso`);
+                //window.location.reload();
+              } else {
+                alert(`acervo "${nome}" já existe`);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          });
+        }); //fim cadastro_acervo
+
+        cadastro_genero.addEventListener("click", async () => {
+          div_principal.textContent = "";
+          const nome = localStorage.getItem("nome");
+
+          const div_cadastro = document.createElement("form");
+          div_cadastro.id = "div_cadastro";
+          div_principal.appendChild(div_cadastro);
+
+          const div_inputs = document.createElement("div");
+          div_inputs.id = "div_inputs";
+
+          const input_obra = document.createElement("input");
+          input_obra.id = "input_obra";
+          input_obra.placeholder = "Nome gênero";
+
+          const input_quantidade = document.createElement("input");
+          input_quantidade.id = "input_quantidade";
+          input_quantidade.type = "number";
+          input_quantidade.placeholder = "Quantidade";
+          const input_img = document.createElement("input");
+          input_img.id = "input_img";
+          input_img.type = "file";
+
+          const sinopse = document.createElement("textarea");
+          sinopse.id = "sinopse";
+          sinopse.placeholder = "Digite a descrição do gênero";
+
+          const btnc = document.createElement("button");
+          btnc.id = "btnc";
+          btnc.textContent = "Cadastrar acervo";
+
+          const quant_um = await fetch(
+            `http://localhost:3000/acervo/quantidade/${nome}`
+          );
+          const quant_dois = await quant_um.json();
+          const quant_tres = quant_dois.quantidade;
+          const quant_tres_mais = quant_tres[0];
+          const quant_quatro = quant_tres_mais[0].quantidade;
+
+          const div_img = document.createElement("div");
+          div_img.id = "div_img";
+
+          const text_quant = document.createElement("h1");
+          text_quant.textContent = `Quantidade acervos: ${quant_quatro}`;
+          text_quant.id = "text_quant";
+
+          div_cadastro.appendChild(div_inputs);
+          div_inputs.appendChild(input_obra);
+          div_inputs.appendChild(sinopse);
+          div_inputs.appendChild(input_img);
+          div_inputs.appendChild(btnc);
+
+          div_cadastro.appendChild(div_img);
+          div_img.appendChild(text_quant);
+
+          btnc.addEventListener("click", async () => {
+            event.preventDefault();
+            const escola = localStorage.getItem("nome");
+            const nome = document.getElementById("input_obra").value;
+            const descricao = document.getElementById("sinopse").value;
+            const imagem = document.getElementById("input_img");
+            if (!nome) {
+              alert("Preencha o nome do gênero");
+              return;
+            }
+
+            if (!descricao) {
+              alert("Preencha o nome da materia");
+            }
+
+            const formData = new FormData();
+
+            formData.append("escola", escola);
+            formData.append("nome", nome);
+            formData.append("descricao", descricao);
+            formData.append("img", imagem.files[0]);
+
+            try {
+              const teste_um = await fetch(
+                `http://localhost:3000/genero/cadastro`,
+                {
+                  method: "POST",
+                  body: formData,
+                }
+              );
+
+              const teste_dois = await teste_um.json();
+              const teste_tres = teste_dois.pod;
+              if (teste_tres == 1) {
+                alert(`acervo "${nome}" cadastrado com sucesso`);
+                window.location.reload();
+              } else {
+                alert(`acervo "${nome}" já existe`);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          });
+        });
+
+        ver_acervo.addEventListener("click", async () => {
+          div_principal.textContent = "";
+          const escola = localStorage.getItem("nome");
+          const main = document.createElement("div");
+          main.id = "main";
+          div_principal.appendChild(main);
+          try {
+            const acervo_um = await fetch(
+              `http://localhost:3000/genero/mostrar/${escola}`,
+              {}
+            );
+            const acervo_dois = await acervo_um.json();
+            console.log(acervo_dois);
+
+            acervo_dois.forEach((cod) => {
+              const acervos = document.createElement("button");
+              acervos.id = "acervos";
+              const acervo_img = document.createElement("img");
+              if (cod.imagem && cod.imagem.data) {
+                const arrayBuffer = new Uint8Array(cod.imagem.data);
+                const binary = Array.from(arrayBuffer)
+                  .map((byte) => String.fromCharCode(byte))
+                  .join("");
+                const base64String = btoa(binary); // Converte para Base64
+                const mimeType = cod.imagem.contentType;
+                acervo_img.src = `data:${mimeType};base64,${base64String}`;
+              } else {
+                acervo_img.src = "../imagem/user_image_default.png";
+                acervo_img.style.background = "white";
+              }
+
+              acervo_img.id = "img";
+              main.appendChild(acervos);
+              acervos.textContent = `${cod.Nome}`;
+              acervos.appendChild(acervo_img);
+
+              acervos.addEventListener("click", async () => {
+                div_principal.textContent = "";
+                const escola = localStorage.getItem("nome");
+                const main = document.createElement("div");
+                main.id = "main";
+                div_principal.appendChild(main);
+                try {
+                  const acervo_um = await fetch(
+                    `http://localhost:3000/acervo/mostrar_obras/${escola}/${acervos.textContent}`
+                  );
+                  const acervo_dois = await acervo_um.json();
+                  acervo_dois.forEach((cod) => {
+                    const acervos = document.createElement("div");
+                    acervos.id = "livros";
+                    const acervo_img = document.createElement("img");
+                    if (cod.imagem && cod.imagem.data) {
+                      const arrayBuffer = new Uint8Array(cod.imagem.data);
+                      const binary = Array.from(arrayBuffer)
+                        .map((byte) => String.fromCharCode(byte))
+                        .join("");
+                      const base64String = btoa(binary); // Converte para Base64
+                      const mimeType = cod.imagem.contentType;
+                      acervo_img.src = `data:${mimeType};base64,${base64String}`;
+                    } else {
+                      acervo_img.src = "../imagem/user_image_default.png";
+                      acervo_img.style.background = "white";
+                    }
+                    acervo_img.id = "img";
+              main.appendChild(acervos);
+              acervos.textContent = `${cod.nome_obra}`;
+              acervos.appendChild(acervo_img);
+                  });
+                } catch (error) {
+                  console.log(error);
+                }
+              });
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        });
+
+        geral_acervo.addEventListener("click", () => {
+          div_principal.textContent = "";
+        });
+      }); //fim domcontentloaded
+    </script>
+  </body>
 </html>

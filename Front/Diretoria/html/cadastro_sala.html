@@ -132,10 +132,12 @@
                 const teste_dois =await teste_um.json();
                 const teste_tres = teste_dois.pod;
                 if(teste_tres == 1){
+                    alert(teste_tres)
                     alert(`Sala "${nome}" cadastrada com sucesso`);
                     window.location.reload();
                 }
                 else{
+                    
                     alert(`Sala "${nome}" já existe`);
                 }
                 }

@@ -62,10 +62,10 @@
 
         btn_menu.addEventListener("click", () => {
           if (!menu.classList.contains("ativo")) {
-            menu.classList.add("ativo"); // Adiciona a classe para exibir o menu
+            menu.classList.add("ativo"); 
           } else {
-            menu.classList.remove("ativo"); // Remove a classe para ocultar o menu
-          }
+            menu.classList.remove("ativo");
+                     }
         });
 
         const div_principal = document.getElementById("centro_centro");
@@ -85,25 +85,26 @@
           input_nome.id = "input_nome";
           input_nome.placeholder = "Nome professor";
 
-          const select_nome_escola = document.createElement("select");
-          select_nome_escola.id = "select_nome_escola";
+          const input_materia = document.createElement("input");
+          input_materia.placeholder = "Materia";
+          input_materia.id = "input_materia";
 
-          try {
-            const professor_um = await fetch(
-              `http://localhost:3000/sala/mostrar/${nome}`
-            );
-            const professor_dois = await professor_um.json();
+          // try {
+          //   const professor_um = await fetch(
+          //     `http://localhost:3000/materia/mostrar/${nome}`
+          //   );
+          //   const professor_dois = await professor_um.json();
 
-            professor_dois.forEach((cod) => {
-              const professors = document.createElement("option");
-              professors.id = "professors";
+          //   professor_dois.forEach((cod) => {
+          //     const professors = document.createElement("option");
+          //     professors.id = "professors";
 
-              select_nome_escola.appendChild(professors);
-              professors.textContent = `${cod.Nome}`;
-            });
-          } catch (error) {
-            console.log(error);
-          }
+          //     input_materia.appendChild(professors);
+          //     professors.textContent = `${cod.Nome}`;
+          //   });
+          // } catch (error) {
+          //   console.log(error);
+          // }
 
           const input_email = document.createElement("input");
           input_email.id = "input_email";
@@ -130,7 +131,6 @@
           const quant_tres = quant_dois.quantidade;
           const quant_tres_mais = quant_tres[0];
           const quant_quatro = quant_tres_mais[0].quantidade;
-
           const div_img = document.createElement("div");
           div_img.id = "div_img";
           const text_quant = document.createElement("h1");
@@ -139,7 +139,7 @@
 
           div_cadastro.appendChild(div_inputs);
           div_inputs.appendChild(input_nome);
-          div_inputs.appendChild(select_nome_escola);
+          div_inputs.appendChild(input_materia);
 
           div_inputs.appendChild(input_email);
           div_inputs.appendChild(input_senha);
@@ -153,17 +153,17 @@
             event.preventDefault();
             const escola = localStorage.getItem("nome");
             const nome = document.getElementById("input_nome").value;
-            const sala = document.getElementById("select_nome_escola").value;
+            const materia = document.getElementById("input_materia").value;
             const email = document.getElementById("input_email").value;
             const senha = document.getElementById("input_senha").value;
             const imagem = document.getElementById("input_img");
-            if ((!nome, !sala, !email, !senha)) {
+            if ((!nome, !materia, !email, !senha)) {
               alert("Preencha o nome do professor");
               return;
             }
 
-            if (!sala) {
-              alert("Preencha o nome da sala");
+            if (!materia) {
+              alert("Preencha o nome da materia");
             }
 
             if (!email) {
@@ -179,10 +179,9 @@
 
             formData.append("escola", escola);
             formData.append("nome", nome);
-            formData.append("sala", sala);
             formData.append("email", email);
+            formData.append("materia", materia);
             formData.append("senha", senha);
-
             formData.append("img", imagem.files[0]);
 
             try {
@@ -223,18 +222,19 @@
             );
             const professor_dois = await professor_um.json();
             console.log(professor_dois);
+
             professor_dois.forEach((cod) => {
-              alert(cod.Nome);
+              alert(cod.nome);
               const professors = document.createElement("div");
               professors.id = "professors";
               const professor_img = document.createElement("img");
-              if (cod.imagem && cod.imagem.data) {
-                const arrayBuffer = new Uint8Array(cod.imagem.data);
+              if (cod.img && cod.img.data) {
+                const arrayBuffer = new Uint8Array(cod.img.data);
                 const binary = Array.from(arrayBuffer)
                   .map((byte) => String.fromCharCode(byte))
                   .join("");
                 const base64String = btoa(binary); // Converte para Base64
-                const mimeType = cod.imagem.contentType;
+                const mimeType = cod.img.contentType;
                 professor_img.src = `data:${mimeType};base64,${base64String}`;
               } else {
                 professor_img.src = "../imagem/user_image_default.png";
@@ -243,7 +243,7 @@
 
               professor_img.id = "img";
               main.appendChild(professors);
-              professors.textContent = `${cod.Nome}`;
+              professors.textContent = `${cod.nome}`;
               professors.appendChild(professor_img);
             });
           } catch (error) {

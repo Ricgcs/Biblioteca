@@ -29,6 +29,19 @@ export const quantAluno = async(nome)=>{
 }
 
 
+export const validarAluno = async(escola,nome)=>{
+    const sql = "SELECT COUNT(cod) as quantidade FROM aluno WHERE Nome_escola = ? AND Nome = ?";
+    try{
+        const result = con.query(sql,[escola, nome]);
+        return result;
+    }
+    catch(error){
+            console.log("Controle/erro:", error)
+    }
+}
+
+
+
 export const verAluno = async(nome)=>{
     const sql = "SELECT * FROM aluno WHERE Nome_escola = ?";
 

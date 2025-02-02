@@ -264,7 +264,7 @@ select{
   color: black;
 }
 
-#select_nome_escola{
+#input_materia{
   padding: 1%;
   border-radius: 1vw;
   background-color: rgba(108, 108, 108, 0.788);
@@ -272,6 +272,10 @@ select{
   color: white;
   font-size: 1vw;
   width: 40%;
+}
+
+#input_materia::placeholder{
+color: black;
 }
 
 #input_email{
