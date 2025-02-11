@@ -272,9 +272,33 @@
   font-size: 100%;
 }
 
-#img{
-  width: 80%;
-  height: 60%;
+
+
+
+#main{
+  overflow: auto;
+  display: flex;  
+  flex-wrap: wrap;
+  gap: 4%;
+  width: 100%;
+  height: 100%;
+}
+
+.paper {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+justify-content: space-around; 
+font-size: 130%;
+
+}
+
+
+.paper:hover{
 }
 
 #salas{
@@ -290,11 +314,144 @@ justify-content: space-around;
 font-size: 130%;
 }
 
-#main{
-  overflow: auto;
-  display: flex;  
-  flex-wrap: wrap;
-  gap: 4%;
+#img{
+  width: 80%;
+  height: 60%;
+}
+
+#em_cima{
+display: flex;
+width: 100%;
+height: 20%;
+flex-direction: row;
+justify-content: space-around;
+}
+
+#fora{
+
+}
+
+#att{
+background-color: transparent;
+/* width: 20%;
+height: 30%; */
+}
+
+#del{
+  background-color: transparent;
+  /* width: 30%;
+  height: 30%; */
+}
+
+
+#imagem_att{
+  display: inline;
+width: 100%;
+height: 60%;
+}
+
+#imagem_att:hover{
+cursor: pointer;
+}
+
+#imagem_dell{
+  display: inline;
+  width: 100%;
+  height: 60%;
+}
+
+#imagem_dell{
+  cursor: pointer;
+}
+
+#tela_att{
+  position: fixed;
+  left: 25%;
+  top: 22%;
+  width: 60%;
+  height:60%;
+  background-color: gray;
+  display: flex;
+  flex-direction: column;
+}
+
+#tela_att_fechar{
+ display: none;
+}
+
+
+#tela_Div_topo{
+width: 100%;
+height: 15%;
+background-color: white;
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+}
+
+#tela_div_topo_nome{
+color: black;
+margin-left: 1vw;
+}
+
+
+#tela_div_topo_btn_fechar{
+  color:white;
+  background-color: red;
+  margin-right: 1vw;
+  height: 2vw;
+  width: 2vw;
+}
+
+#tela_div_topo_btn_fechar:hover{
+  cursor: pointer;
+}
+
+#tela_div_meio{
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+#tela_div_meio_direita{
+height: 100%;
+width: 30%;
+background-color: blueviolet;
+}
+
+#tela_div_meio_esquerda{
+  height: 100%;
+  width: 70%;
+  background-color: brown;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+#input_div_nome{
+  padding: 1%;
+  border-radius: 1vw;
+  background-color: rgba(108, 108, 108, 0.788);
+  border: solid 0.1vw black;
+  color: white;
+  font-size: 1vw;
+}
+
+#input_nome::placeholder{
+  color: black;
+}
+
+#btn_att{
+  background-color: rgb(21, 112, 21);
+  color: white;
+  padding: 0.5vw;
+  border-radius: 1vw;
+}
+
+#btn_att:hover{
+  cursor: pointer;
+  background-color: darkgreen;
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/inicial.css">
+    <title>Inicío:Aluno</title>
+</head>
+<body>
+<div id="tela">
+    <div id="topo">
+
+            <div id="esquerda">
+                <div id="button_menu">
+                    <hr id="barra">
+                    <hr id="barra">
+                    <hr id="barra">
+                </div>
+
+                <div id="texto_esquerda">
+                    <h1 id="te1">Biblioteca</h1>
+                    <hr id="barra_horizontal">
+                </div>
+            </div>
+            
+            <div id="centro"></div>
+            <div id="direita"></div>  
+
+    </div>
+    <div id="menu" class="menu">
+        <a href="./cadastro_professor.html"><button></button></a>
+    
+        <a href="#"><button>Status</button></a>
+    </div>
+
+    <div id="corpo">    
+  
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const btn_menu = document.getElementById("button_menu");
+        const menu = document.getElementById("menu");
+        const btn_cadastro = document.getElementById("cadastro");
+
+        btn_menu.addEventListener("click", () => {
+            if (!menu.classList.contains("ativo")) {
+                menu.classList.add("ativo"); // Adiciona a classe para exibir o menu
+            } else {
+                menu.classList.remove("ativo"); // Remove a classe para ocultar o menu
+            }
+        });//fim menu
+        
+
+    });//fim domcontentloaded
+</script>
+</body>
+</html>

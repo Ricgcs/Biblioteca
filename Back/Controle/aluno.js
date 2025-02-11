@@ -3,12 +3,12 @@ import { conexao } from "../banco_conexao/conexao.js";
 const con = await conexao();
 
 
-export const cadastroAluno = async (escola, nome, sala, email, senha, imagem)=>{
-    const sql = "INSERT INTO aluno(Nome_escola, Nome, Nome_sala, Email, Senha, imagem) VALUES (?, ?, ?, ?, ?, ?)";
-    console.log("VAI TOMAR NO CENTRO DO OLHO DO SEU CÚ:",{escola, nome, sala, email, senha, imagem})
+export const cadastroAluno = async (escola, nome, sala, imagem)=>{
+    const sql = "INSERT INTO aluno(Nome_escola, Nome, Nome_sala, imagem) VALUES (?, ?, ?, ?, ?, ?)";
+    console.log("VAI TOMAR NO CENTRO DO OLHO DO SEU CÚ:",{escola, nome, sala, imagem})
     try{
         const img =  imagem.buffer;
-        const result = await con.query(sql,[escola, nome, sala, email, senha, img]);
+        const result = await con.query(sql,[escola, nome, sala, img]);
         return result;
     }
 
@@ -54,3 +54,13 @@ export const verAluno = async(nome)=>{
         console.log(error);
     }
 }
+
+export const login_aluno = async (nome, email, senha) => {
+  const logar =
+    "SELECT COUNT(cod) AS count FROM aluno WHERE Nome = ? AND Email = ? AND Senha = ? ";
+
+  const [results] = await con.query(logar, [nome, email, senha]);
+  const count = results[0].count;
+  console.log("escola", count);
+  return count;
+};

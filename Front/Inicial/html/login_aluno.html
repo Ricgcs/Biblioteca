@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/login_aluno.css">
-    <title>Login aluno</title>
+    <title>login escola</title>
 </head>
 <body>
 <div id="tela">
@@ -20,21 +20,35 @@
                 <hr id="barra_horizontal">
             </div>
         </div>
+
         <div id="centro"></div>
-        <div id="direita"></div>
+        <div id="direita"></div>  
+    </div>   
+
+    <div id="menu" class="menu">
+        <a href="/Front/Inicial/html/inicial.html"><button>Inicial</button></a>
+        <a href="/Front/Inicial/html/cadastro_escola.html"><button>Cadastro escola</button></a>
+        <a href="/Front/Inicial/html/login_escola.html"><button>Login escola</button></a>
+        <a href="/Front/Inicial/html/login_professor.html"><button>Login professor</button></a>
+        <a href="/Front/Inicial/html/login_aluno.html"><button>Login aluno</button></a>
     </div>
-</div>
-<div id="menu" class="menu">
-    <a href="/Front/Inicial/html/inicial.html"><button>Inicial</button></a>
-    <a href="/Front/Inicial/html/cadastro_escola.html"><button>Cadastro escola</button></a>
-    <a href="/Front/Inicial/html/login_escola.html"><button>Login escola</button></a>
-    <a href="/Front/Inicial/html/login_professor.html"><button>Login professor</button></a>
-    <a href="/Front/Inicial/html/login_aluno.html"><button>Login aluno</button></a>
+
+    <div id="corpo">   
+        <div id="form_login_escola">
+            <h1 id="titulo_tela">Login aluno</h1>
+            <input placeholder="Nome" id="escola_nome" type="text" name="nome">
+            <input placeholder="Email" id="escola_email" type="email" name="email">
+            <input placeholder="Senha" id="escola_senha" type="password" name="senha">
+            <button id="login">Login</button>
+        </div>
+    </div>
+
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const btn_menu = document.getElementById("button_menu");
         const menu = document.getElementById("menu");
+        const btn_login = document.getElementById("login");
 
         btn_menu.addEventListener("click", () => {
             if (!menu.classList.contains("ativo")) {
@@ -42,8 +56,47 @@
             } else {
                 menu.classList.remove("ativo"); // Remove a classe para ocultar o menu
             }
-        });
-    });
+        });//fim menu
+
+
+        btn_login.addEventListener("click",async()=>{
+            const nome = document.getElementById("escola_nome").value;
+        const email = document.getElementById("escola_email").value;
+        const senha = document.getElementById("escola_senha").value;
+            
+            if(!nome || !email ||!senha ){
+                               alert("Preencha todos os campos");
+            }
+
+            const formData = new FormData();
+    formData.append("nome", nome);
+    formData.append("email", email);
+    formData.append("senha", senha);
+            const dados = {nome, email,senha}
+            console.log(dados);
+
+    const response = await fetch(`http://localhost:3000/login/aluno/${nome}/${email}/${senha}`, {
+        method:"POST",
+    })
+   const log_um = await response.json();
+    const log = log_um.login;
+
+    if(log >= 1){
+        alert("Usuário encontrado")
+        localStorage.setItem("nome",nome);
+        localStorage.setItem("email",email);
+        window.location.href = "/Front/Aluno/html/inicial.html";
+    }
+    else{
+        alert("Usuário não encontrado");
+    }
+
+           
+        })//fim btn_login
+
+        
+
+    });//fim domcontentloaded
 </script>
 </body>
 </html>

@@ -1,0 +1,48 @@
+//--------------------------------------------------------genero-----------------------------------------------------------------------\\
+app.post("/genero/cadastro", upload.single("img"), async (req, res) => {
+  console.log("Servidor recebeu");
+  //nome_escola, nome_obra, nome_autor, genero, qtd_paginas, quantidade, sinopse, imagem
+  const escola = req.body.escola;
+  const nome = req.body.nome;
+  const materia = req.body.materia;
+  const email = req.body.email;
+  const senha = req.body.senha;
+  const imagem = req.file;
+  const genero = { escola, nome, email, materia, senha, imagem };
+  console.log("Servidor", genero);
+  //escola, nome, sala, email, senha
+
+  try {
+    const teste = await quantgenero(nome);
+    if (teste >= 0) {
+      res.send({ pod: 0 });
+    } else {
+      const response = await cadastrogenero(escola, nome, email, materia, senha, imagem);
+      res.send({ pod: 1 });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/genero/quantidade/:escola", async (req, res) => {
+  const escola = req.params.escola;
+
+  try {
+    const result = await quantgenero(escola);
+    res.send({ quantidade: result });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/genero/mostrar/:escola", async (req, res) => {
+  const escola = req.params.escola;
+
+  try {
+    const result = await vergenero(escola);
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+  }
+});

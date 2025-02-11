@@ -25,7 +25,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 11%;
+  width: 12vw;
   height: 100%;
 }
 
@@ -50,11 +50,12 @@
 }
 
 #button_menu {
-  width: 13%;
-  height: 27%;
+  width: 1.5vw;
+  height: 1vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-left: 1vw;
 }
 
 #button_menu:hover {
@@ -69,10 +70,10 @@
 }
 
 .menu {
-  display: none; /* Menu escondido por padrão */
-  position: absolute;
-  top: 10%;
-  left: 0;
+  display: none;
+  /* position: absolute;
+    top: 20%;
+    left: 0; */
   width: 100%;
   background-color: rgb(6, 9, 90);
   padding: 1vw;
@@ -97,4 +98,68 @@
 
 .menu button:hover {
   background-color: rgb(200, 200, 200);
+}
+
+#corpo {
+  /* background-color: brown;  */
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#form_login_escola {
+  margin-top: -10vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 15%;
+  height: 35%;
+  align-items: center;
+}
+
+#escola_nome {
+  background-color: gainsboro;
+  padding: 0.5vw;
+  border: solid black 0.15vw;
+  border-radius: 10vw;
+  width: 100%;
+}
+
+#escola_email {
+  background-color: gainsboro;
+  padding: 0.5vw;
+  border: solid black 0.15vw;
+  border-radius: 10vw;
+  width: 100%;
+}
+
+#escola_senha {
+  background-color: gainsboro;
+  padding: 0.5vw;
+  border: solid black 0.15vw;
+  border-radius: 10vw;
+  width: 100%;
+}
+
+#escola_foto {
+  background-color: gainsboro;
+  padding: 0.5vw;
+  border: solid black 0.15vw;
+  border-radius: 10vw;
+  width: 100%;
+}
+
+#login {
+  background-color: gainsboro;
+  padding: 0.5vw;
+  border: solid black 0.15vw;
+  border-radius: 10vw;
+  width: 50%;
+}
+
+#login:hover {
+  background-color: gray;
+  cursor: pointer;
 }

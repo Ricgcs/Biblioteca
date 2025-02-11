@@ -103,15 +103,15 @@
             console.log(error);
           }
 
-          const input_email = document.createElement("input");
-          input_email.id = "input_email";
-          input_email.type = "email";
-          input_email.placeholder = "Email aluno";
+          // const input_email = document.createElement("input");
+          // input_email.id = "input_email";
+          // input_email.type = "email";
+          // input_email.placeholder = "Email aluno";
 
-          const input_senha = document.createElement("input");
-          input_senha.id = "input_senha";
-          input_senha.type = "password";
-          input_senha.placeholder = "Senha aluno";
+          // const input_senha = document.createElement("input");
+          // input_senha.id = "input_senha";
+          // input_senha.type = "password";
+          // input_senha.placeholder = "Senha aluno";
 
           const input_img = document.createElement("input");
           input_img.id = "input_img";
@@ -139,8 +139,8 @@
           div_inputs.appendChild(input_nome);
           div_inputs.appendChild(select_nome_escola);
 
-          div_inputs.appendChild(input_email);
-          div_inputs.appendChild(input_senha);
+          // div_inputs.appendChild(input_email);
+          // div_inputs.appendChild(input_senha);
           div_inputs.appendChild(input_img);
           div_inputs.appendChild(btnc);
 
@@ -152,10 +152,10 @@
             const escola = localStorage.getItem("nome");
             const nome = document.getElementById("input_nome").value;
             const sala = document.getElementById("select_nome_escola").value;
-            const email = document.getElementById("input_email").value;
-            const senha = document.getElementById("input_senha").value;
+            // const email = document.getElementById("input_email").value;
+            // const senha = document.getElementById("input_senha").value;
             const imagem = document.getElementById("input_img");
-            if ((!nome, !sala, !email, !senha)) {
+            if ((!nome)) {
               alert("Preencha o nome do aluno");
               return;
             }
@@ -164,23 +164,11 @@
               alert("Preencha o nome da sala");
             }
 
-            if (!email) {
-              alert("Preencha o email");
-              return;
-            }
-
-            if (!senha) {
-              alert("Preencha a senha");
-              return;
-            }
             const formData = new FormData();
 
             formData.append("escola", escola);
             formData.append("nome", nome);
             formData.append("sala", sala);
-            formData.append("email", email);
-            formData.append("senha", senha);
-
             formData.append("img", imagem.files[0]);
 
             try {
@@ -197,7 +185,7 @@
               const teste_dois = await teste_um.json();
               const teste_tres = teste_dois.pod;
               if (teste_tres == 1) {
-                alert(teste_tres)
+                alert(teste_tres);
                 alert(`aluno "${nome}" cadastrado com sucesso`);
                 //window.location.reload();
               } else {
@@ -223,25 +211,85 @@
             const aluno_dois = await aluno_um.json();
             console.log(aluno_dois);
             aluno_dois.forEach((cod) => {
-              alert(cod.Nome);
+              const paper = document.createElement("div");
+                    paper.className = "paper";
+
               const alunos = document.createElement("div");
               alunos.id = "alunos";
               const aluno_img = document.createElement("img");
               if (cod.imagem && cod.imagem.data) {
                 const arrayBuffer = new Uint8Array(cod.imagem.data);
-  const binary = Array.from(arrayBuffer).map(byte => String.fromCharCode(byte)).join('');
-  const base64String = btoa(binary); // Converte para Base64
-  const mimeType = cod.imagem.contentType;
-  aluno_img.src = `data:${mimeType};base64,${base64String}`;
+                const binary = Array.from(arrayBuffer)
+                  .map((byte) => String.fromCharCode(byte))
+                  .join("");
+                const base64String = btoa(binary); // Converte para Base64
+                const mimeType = cod.imagem.contentType;
+                aluno_img.src = `data:${mimeType};base64,${base64String}`;
               } else {
                 aluno_img.src = "../imagem/user_image_default.png";
                 aluno_img.style.background = "white";
               }
+              
 
               aluno_img.id = "img";
               main.appendChild(alunos);
-              alunos.textContent = `${cod.Nome}`;
-              alunos.appendChild(aluno_img);
+              main.appendChild(alunos);
+            alunos.appendChild(paper);
+
+            paper.appendChild(aluno_img);
+
+            const texto = document.createElement("div");
+            paper.appendChild(texto)
+            texto.textContent = `${cod.Nome}`;
+
+            paper.addEventListener("mouseenter",async()=>{
+                texto.textContent = ""
+                texto.id = "em_cima"
+
+                const imagem_att = document.createElement("img");
+            imagem_att.src = "/Front/Diretoria/imagem/att.png";
+            imagem_att.id = "imagem_att";
+
+            const imagem_dell = document.createElement("img");
+            imagem_dell.src = "/Front/Diretoria/imagem/dell.png";
+            imagem_dell.id = "imagem_dell";
+
+
+            const deletar = document.createElement("button");
+            deletar.appendChild(imagem_dell);
+            deletar.id = "del";
+            const atualizar = document.createElement("button");
+            atualizar.appendChild(imagem_att);
+               atualizar.id = "att";
+
+               
+
+                texto.appendChild(deletar)
+                texto.appendChild(atualizar);
+
+                deletar.addEventListener("click",async()=>{
+                    try{
+                    const del = await fetch(`http://localhost:3000/sala/deletar/${cod.Nome}`);
+                    alert(`"${cod.Nome}" deletado com sucesso`);
+                    }
+                    catch(error){
+                        alert("deu erro")
+                        console.log(error)
+                    }
+                })
+
+                atualizar.addEventListener("click",()=>{
+                                      
+
+                })
+
+            })
+            
+            paper.addEventListener("mouseleave",async()=>{
+            texto.textContent = `${cod.Nome}`;
+            })
+            
+
             });
           } catch (error) {
             console.log(error);

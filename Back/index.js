@@ -12,8 +12,10 @@ import {
 
 import {
   cadastroSala,
+  delSala,
   quantidadeSala,
   salas,
+  updSala,
   validarSala,
 } from "./Controle/sala.js";
 
@@ -21,6 +23,7 @@ import { cadastro } from "../Back/Controle/cods_teste_um.js";
 
 import {
   cadastroAluno,
+  login_aluno,
   quantAluno,
   validarAluno,
   verAluno,
@@ -140,16 +143,45 @@ app.get("/sala/mostrar/:escola", async (req, res) => {
     console.log(error);
   }
 });
+
+
+app.get("/sala/deletar/:nome", async (req,res) => {
+
+  const nome = req.params.nome;
+
+  try{
+    const del = await delSala(nome);
+    res.send({pod:1})
+  }
+  catch(error){
+    res.send({pod:0})
+      console.log(error)
+  }
+});
+
+app.get("/sala/atualizar/:nome_futuro/:nome_antigo/:escola", async (req,res) => {
+
+  const nome_futuro = req.params.nome_futuro;
+  const nome_antigo = req.params.nome_antigo;
+  const escola = req.params.escola;
+  try{
+    const upd = await updSala(nome_futuro, nome_antigo, escola);
+    res.send({pod:1})
+  }
+  catch(error){
+    res.send({pod:0})
+      console.log(error)
+  }
+});
 //--------------------------------------------------------Aluno-----------------------------------------------------------------------\\
 app.post("/aluno/cadastro", upload.single("img"), async (req, res) => {
   console.log("Servidor recebeu");
   const escola = req.body.escola;
   const nome = req.body.nome;
   const sala = req.body.sala;
-  const email = req.body.email;
-  const senha = req.body.senha;
+ 
   const imagem = req.file;
-  const aluno = { escola, nome, sala, email, senha, imagem };
+  const aluno = { escola, nome, sala, imagem };
   console.log("Servidor", aluno);
   //escola, nome, sala, email, senha
 
@@ -163,8 +195,6 @@ app.post("/aluno/cadastro", upload.single("img"), async (req, res) => {
         escola,
         nome,
         sala,
-        email,
-        senha,
         imagem
       );
     }
@@ -200,6 +230,23 @@ app.post("/cadastro", async (req, res) => {
   const enviavel = recebido.tt;
   console.log(`recebido: `, enviavel);
   cadastro(enviavel);
+});
+
+app.post("/login/aluno/:nome/:email/:senha", async (req, res) => {
+  // const nome = req.body.nome;
+  // const email = req.body.email;
+  // const senha = req.body.senha;
+  console.log(req.body.nome);
+  const { nome, email, senha } = req.params;
+  const dados = { nome, email, senha };
+  console.log("Requisição recebida:", dados);
+  try {
+    const log = await login_aluno(nome, email, senha);
+    console.log("servidor:", log);
+    res.send({ login: log });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 //----------------------------------------------------Professor-----------------------------------------------------------------------\\

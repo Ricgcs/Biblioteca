@@ -54,3 +54,32 @@ export const salas = async(escola, nome) => {
         console.log(error);
     }
 }
+
+export const delSala = async(nome) => {
+  const sql = "DELETE FROM sala WHERE Nome = ?";
+  
+  try{
+  const [sala] = await con.query(sql,[nome]);
+  return sala;
+  }
+
+  catch(error){
+      console.log(error);
+  }
+}
+
+
+export const updSala = async(nome_futuro, nome_antigo, escola) => {
+  const sql = "UPDATE sala SET Nome = ? WHERE Nome = ? AND Nome_escola = ?";
+  const sqlDois = "UPDATE aluno SET Nome_sala = ? WHERE Nome_sala = ? AND Nome_escola = ?"
+  try{
+  const [sala] = await con.query(sql,[nome_futuro, nome_antigo, escola]);
+  const [salaDois] = await con.query(sqlDois,[nome_futuro, nome_antigo, escola]);
+  return sala;
+  }
+
+  catch(error){
+      console.log(error);
+  }
+}
+

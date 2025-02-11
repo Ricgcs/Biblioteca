@@ -24,7 +24,9 @@
             </div>
             
             <div id="centro"></div>
-            <div id="direita"></div>  
+            <div id="direita">
+                <a href="../../Inicial/html/inicial.html"><button id="logout">Logout</button></a>
+            </div>  
 
     </div>
     <div id="menu" class="menu">
@@ -66,6 +68,10 @@
    
                 
     document.addEventListener("DOMContentLoaded",async () => {
+        const logout = document.getElementById("logout");
+        logout.addEventListener("click",()=>{
+            localStorage.clear();
+        })
         const cadastro_sala = document.getElementById("btn_cadastro_sala");
         const ver_sala = document.getElementById("btn_ver_sala");
         const geral_sala = document.getElementById("btn_geral_sala");
@@ -160,14 +166,137 @@
                 console.log(sala_dois)
 
                 sala_dois.forEach(cod => {
+                    const paper = document.createElement("div");
+                    paper.className = "paper";
+
                     const salas = document.createElement("div");
+                    
             salas.id = "salas";
             const sala_img = document.createElement("img");
             sala_img.src = "/Front/Diretoria/imagem/MAPA-DE-SALA-EDITAVEL.jpg";
             sala_img.id = "img"; 
             main.appendChild(salas);
-                    salas.textContent = `${cod.Nome}`;
-                    salas.appendChild(sala_img)
+            salas.appendChild(paper);
+
+            paper.appendChild(sala_img);
+            const texto = document.createElement("div");
+            paper.appendChild(texto)
+            texto.textContent = `${cod.Nome}`;
+
+            paper.addEventListener("mouseenter",async()=>{
+                texto.textContent = ""
+                texto.id = "em_cima"
+
+                const imagem_att = document.createElement("img");
+            imagem_att.src = "/Front/Diretoria/imagem/att.png";
+            imagem_att.id = "imagem_att";
+
+            const imagem_dell = document.createElement("img");
+            imagem_dell.src = "/Front/Diretoria/imagem/dell.png";
+            imagem_dell.id = "imagem_dell";
+
+
+            const deletar = document.createElement("button");
+            deletar.appendChild(imagem_dell);
+            deletar.id = "del";
+            const atualizar = document.createElement("button");
+            atualizar.appendChild(imagem_att);
+               atualizar.id = "att";
+
+               
+
+                texto.appendChild(deletar)
+                texto.appendChild(atualizar);
+
+                deletar.addEventListener("click",async()=>{
+                    try{
+                    const del = await fetch(`http://localhost:3000/sala/deletar/${cod.Nome}`);
+                    alert(`"${cod.Nome}" deletado com sucesso`);
+                    }
+                    catch(error){
+                        alert("deu erro")
+                        console.log(error)
+                    }
+                })
+
+                atualizar.addEventListener("click",()=>{
+                                      
+                    const tela_att = document.createElement("div");
+                    tela_att.id = "tela_att";
+
+                    const tela_Div_topo = document.createElement("div");
+                    tela_Div_topo.id = "tela_Div_topo";
+
+                    const tela_div_topo_btn_fechar = document.createElement("button");
+                    tela_div_topo_btn_fechar.id = "tela_div_topo_btn_fechar";
+                    tela_div_topo_btn_fechar.textContent = "x";
+                    
+                    const tela_div_topo_nome = document.createElement("h1");
+                    tela_div_topo_nome.id = "tela_div_topo_nome";
+                    tela_div_topo_nome.textContent = `${cod.Nome}`;
+
+                    const tela_div_meio = document.createElement("div");
+                    tela_div_meio.id = "tela_div_meio";
+
+                    const tela_div_meio_esquerda = document.createElement("div");
+                    tela_div_meio_esquerda.id = "tela_div_meio_esquerda";
+                    
+                    const tela_div_meio_direita = document.createElement("div");
+                    tela_div_meio_direita.id = "tela_div_meio_direita";
+                    
+                    const input_nome = document.createElement("input");
+                    input_nome.id = "input_div_nome";
+                    input_nome.placeholder = "Novo nome";
+
+                    const btn_att = document.createElement("button");
+                    btn_att.id = "btn_att";
+                    btn_att.textContent = "Atualizar";
+
+                    main.appendChild(tela_att);
+
+                    tela_att.appendChild(tela_Div_topo);
+                    tela_Div_topo.appendChild(tela_div_topo_nome);
+                    tela_Div_topo.appendChild(tela_div_topo_btn_fechar);
+
+                    tela_att.appendChild(tela_div_meio);
+                    tela_div_meio.appendChild(tela_div_meio_esquerda);
+                    tela_div_meio_esquerda.appendChild(input_nome);
+                    tela_div_meio.appendChild(tela_div_meio_direita);
+                    tela_div_meio_esquerda.appendChild(btn_att);
+
+
+
+                    tela_div_topo_btn_fechar.addEventListener("click",()=>{
+                    
+                         tela_att.textContent = "";
+                         tela_att.id = "tela_att_fechar";
+                     })
+
+                     btn_att.addEventListener("click",async()=>{
+                        const escola = localStorage.getItem("nome");
+                        const nome_futuro = document.getElementById("input_div_nome").value;
+                        const nome_antigo = cod.Nome;
+
+                        try{
+                            const upd = await fetch(`http://localhost:3000/sala/atualizar/${nome_futuro}/${nome_antigo}/${escola}`);
+                            alert("Atualizado com sucesso");
+                            window.location.reload();
+
+                        }
+
+                        catch(error){
+                            console.log(error);
+                        }
+                     })
+                })
+
+            })
+            
+            paper.addEventListener("mouseleave",async()=>{
+            texto.textContent = `${cod.Nome}`;
+            })
+            
+                    
                 });
 
             }
