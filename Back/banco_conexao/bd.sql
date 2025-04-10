@@ -19,15 +19,17 @@ USE `mydb` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`acervo` (
   `cod` INT NOT NULL AUTO_INCREMENT,
+  `nome_escola` VARCHAR(255) NULL DEFAULT NULL,
   `nome_obra` VARCHAR(45) NOT NULL,
   `nome_autor` VARCHAR(45) NOT NULL,
   `genero` VARCHAR(45) NOT NULL,
   `qtd_paginas` VARCHAR(45) NOT NULL,
   `quantidade` INT NULL DEFAULT NULL,
-  `popularidade` INT NULL DEFAULT NULL,
-  `avaliacao_aluno` DECIMAL(10,4) NULL DEFAULT NULL,
+  `sinopse` VARCHAR(255) NULL DEFAULT NULL,
+  `imagem` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`cod`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -39,11 +41,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`aluno` (
   `Nome_escola` VARCHAR(45) NOT NULL,
   `Nome` VARCHAR(45) NOT NULL,
   `Nome_sala` VARCHAR(45) NOT NULL,
-  `Email` VARCHAR(255) NOT NULL,
-  `Senha` VARCHAR(45) NOT NULL,
-  `Alunocol` VARCHAR(45) NOT NULL,
+  `imagem` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`cod`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 30
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -58,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`escola` (
   `img` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -99,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`generos` (
   `imagem` LONGBLOB NOT NULL,
   PRIMARY KEY (`cod`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -107,17 +109,29 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`professor` (
   `cod` INT NOT NULL AUTO_INCREMENT,
-  `Escola_cod` INT NOT NULL,
+  `Escola` VARCHAR(255) NOT NULL,
   `nome` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `materia` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`cod`, `Escola_cod`),
-  INDEX `fk_Professor_Escola1_idx` (`Escola_cod` ASC) VISIBLE,
-  CONSTRAINT `fk_Professor_Escola1`
-    FOREIGN KEY (`Escola_cod`)
-    REFERENCES `mydb`.`escola` (`cod`))
+  `img` LONGBLOB NULL DEFAULT NULL,
+  PRIMARY KEY (`cod`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`responsavel`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`responsavel` (
+  `cod` INT NOT NULL AUTO_INCREMENT,
+  `nome_escola` VARCHAR(255) NOT NULL,
+  `nome_sala` VARCHAR(255) NOT NULL,
+  `nome_professor` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`cod`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -130,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`sala` (
   `Nome` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 17
+AUTO_INCREMENT = 43
 DEFAULT CHARACTER SET = utf8mb3;
 
 
