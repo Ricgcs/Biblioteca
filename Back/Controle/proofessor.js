@@ -52,3 +52,13 @@ export const verProfessor = async(nome)=>{
         console.log(error);
     }
 }
+
+export const login_professor = async (nome, email, senha) => {
+  const logar =
+    "SELECT COUNT(cod) AS count FROM professor WHERE nome = ? AND email = ? AND senha = ? ";
+
+  const [results] = await con.query(logar, [nome, email, senha]);
+  const count = results[0].count;
+  console.log("escola", count);
+  return count;
+};

@@ -30,6 +30,7 @@ import {
 } from "./Controle/aluno.js";
 import {
   cadastroProfessor,
+  login_professor,
   quantProfessor,
   validarProfessor,
   verProfessor,
@@ -47,6 +48,8 @@ import {
   validarGenero,
   vergenero,
 } from "./Controle/genero.js";
+import { cadastroresponsavel, verresponsavel } from "./Controle/responsavel.js";
+
 
 const app = express();
 const host = "127.0.0.1";
@@ -305,6 +308,24 @@ app.get("/professor/mostrar/:escola", async (req, res) => {
   }
 });
 
+
+app.post("/login/professor/:nome/:email/:senha", async (req, res) => {
+  // const nome = req.body.nome;
+  // const email = req.body.email;
+  // const senha = req.body.senha;
+  console.log(req.body.nome);
+  const { nome, email, senha } = req.params;
+  const dados = { nome, email, senha };
+  console.log("Requisição recebida:", dados);
+  try {
+    const log = await login_professor(nome, email, senha);
+    console.log("servidor:", log);
+    res.send({ login: log });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //--------------------------------------------------------Acervo-----------------------------------------------------------------------\\
 app.post("/acervo/cadastro", upload.single("img"), async (req, res) => {
   console.log("Servidor recebeu");
@@ -438,6 +459,65 @@ app.get("/genero/mostrar/:escola", async (req, res) => {
   }
 });
 
+
+//--------------------------------------------------------responsavel--------------------------------------------------------------------\\
+
+
+app.get("/responsavel/cadastro/:escola/:prof/:sala", async (req, res) => {
+  const escola = req.params.escola;
+  const professor = req.params.prof;
+  const sala = req.params.sala;
+  try {
+
+      const validar = await cadastroresponsavel(escola,  sala, professor);
+      res.send({ pod: 1 });
+    
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+app.get("/responsavel/mostrar/:escola", async (req, res) => {
+  const escola = req.params.escola;
+
+  try {
+    const most = await verresponsavel(escola);
+    res.send(most);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+app.get("/responsavel/deletar/:nome", async (req,res) => {
+
+  const nome = req.params.nome;
+
+  try{
+    const del = await delSala(nome);
+    res.send({pod:1})
+  }
+  catch(error){
+    res.send({pod:0})
+      console.log(error)
+  }
+});
+
+app.get("/responsavel/atualizar/:nome_futuro/:nome_antigo/:escola", async (req,res) => {
+
+  const nome_futuro = req.params.nome_futuro;
+  const nome_antigo = req.params.nome_antigo;
+  const escola = req.params.escola;
+  try{
+    const upd = await updSala(nome_futuro, nome_antigo, escola);
+    res.send({pod:1})
+  }
+  catch(error){
+    res.send({pod:0})
+      console.log(error)
+  }
+});
 //--------------------------------------------------------Servidor--------------------------------------------------------------------\\
 app.listen(porta, host, () => {
   console.log("Servidor funcionando");

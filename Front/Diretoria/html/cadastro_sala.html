@@ -54,6 +54,10 @@
             Geral escola
         </div>
 
+        <div id="btn_responsavel">
+            Atrelar sala
+        </div>
+
         </div>
 
         <div id="centro_centro">
@@ -75,6 +79,7 @@
         const cadastro_sala = document.getElementById("btn_cadastro_sala");
         const ver_sala = document.getElementById("btn_ver_sala");
         const geral_sala = document.getElementById("btn_geral_sala");
+        const btn_responsavel = document.getElementById("btn_responsavel")
         const btn_menu = document.getElementById("button_menu");
         const menu = document.getElementById("menu");
         const btn_cadastro = document.getElementById("cadastro");
@@ -307,6 +312,97 @@
 
         geral_sala.addEventListener("click",()=>{
             div_principal.textContent = "";
+
+        })
+        
+        btn_responsavel.addEventListener("click",async ()=>{
+            div_principal.textContent = "";
+            const escola = localStorage.getItem("nome");
+
+            const tela_principal = document.createElement("div");
+            tela_principal.id = "tela_principal";
+
+            const div_topo = document.createElement("div");
+            div_topo.id = "div_topo";
+
+            const select_professor = document.createElement("select");
+            select_professor.id = "select_professor";
+
+            const select_sala = document.createElement("select");
+            select_sala.id = "select_sala";
+
+            const btn_res = document.createElement("button");
+            btn_res.id = "btn_res";
+            btn_res.textContent = "Salvar";
+
+            const div_corpo = document.createElement("div");
+            div_corpo.id = "div_corpo";
+
+            div_principal.appendChild(tela_principal);
+            tela_principal.appendChild(div_topo);
+            div_topo.appendChild(select_professor);
+            div_topo.appendChild(select_sala);
+            div_topo.appendChild(btn_res);
+            tela_principal.appendChild(div_corpo);
+
+            const professor_um = await fetch(
+              `http://localhost:3000/professor/mostrar/${escola}`
+            );
+            const professor_dois = await professor_um.json();
+            
+            professor_dois.forEach((prof)=>{
+                const nome_professor = document.createElement("option");
+                nome_professor.id = "nome_professor";
+                nome_professor.textContent = `${prof.nome}`;
+                select_professor.appendChild(nome_professor);
+
+            })
+
+            const sala_um = await fetch(`http://localhost:3000/sala/mostrar/${escola}`);
+            const sala_dois = await sala_um.json();
+
+            sala_dois.forEach((sala)=>{
+                const nome_sala = document.createElement("option");
+                nome_sala.id = "nome_sala";
+                nome_sala.textContent = `${sala.Nome}`;
+                select_sala.appendChild(nome_sala);
+
+            })
+
+            btn_res.addEventListener("click",async ()=>{
+                const nome = document.getElementById("nome_professor").value;
+                const nome2 = document.getElementById("nome_sala").value;
+                try{
+                const cadastro_res = await fetch(`http://localhost:3000/responsavel/cadastro/${escola}/${nome}/${nome2}`);
+           
+                alert("Funcionou");
+            }
+                catch(error){
+                alert("Erro");
+                console.log(error)
+                }
+            })
+
+
+            const responsaveis = await fetch(`http://localhost:3000/responsavel/mostrar/${escola}`);
+            const responsaveis_dois = await responsaveis.json();
+
+            responsaveis_dois.forEach((sala)=>{
+                const nome_responsaveis = document.createElement("div");
+                nome_responsaveis.id = "nome_responsaveis";
+
+                const h1_professor = document.createElement("h1");
+                h1_professor.id = "h1_professor";
+                h1_professor.textContent = `${sala.nome_professor}`;
+
+                const h1_sala = document.createElement("h1");
+                h1_sala.id = "h1_sala";
+                h1_sala.textContent = `${sala.nome_sala}`;
+
+                div_corpo.appendChild(nome_responsaveis);
+                nome_responsaveis.appendChild(h1_professor);
+                nome_responsaveis.appendChild(h1_sala);
+            })
 
         })
         

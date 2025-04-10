@@ -4,7 +4,7 @@ const con = await conexao();
 
 
 export const cadastroAluno = async (escola, nome, sala, imagem)=>{
-    const sql = "INSERT INTO aluno(Nome_escola, Nome, Nome_sala, imagem) VALUES (?, ?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO aluno(Nome_escola, Nome, Nome_sala, imagem) VALUES (?, ?, ?, ?)";
     console.log("VAI TOMAR NO CENTRO DO OLHO DO SEU CÚ:",{escola, nome, sala, imagem})
     try{
         const img =  imagem.buffer;
